@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 			new FutureStore\ApiBundle\FutureStoreApiBundle(),
 			new FutureStore\SiteBundle\FutureStoreSiteBundle(),
 			new FutureStore\UserBundle\FutureStoreUserBundle(),
+			new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
