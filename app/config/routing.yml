@@ -1,0 +1,3 @@
+index:
+    prefix: /
+    resource: "@FutureStoreSiteBundle/Resources/config/routing.xml"
