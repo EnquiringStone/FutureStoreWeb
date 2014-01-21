@@ -8,4 +8,16 @@
 		<default key="_controller">FutureStoreSiteBundle:Index:index</default>
 	</route>
 
+	<!-- Security -->
+	<route id="FutureStoreSiteBundle_profile_login" pattern="/profile/login">
+		<default key="_controller">FutureStoreSiteBundle:Security:login</default>
+		<requirement key="_method">GET</requirement>
+	</route>
+	<route id="FutureStoreSiteBundle_profile_login_check" pattern="/profile/login_check" />
+	<route id="FutureStoreSiteBundle_profile_logout" pattern="/profile/logout" />
+
+	<!-- Profile -->
+	<route id="FutureStoreSiteBundle_profile_index" pattern="/profile/index">
+		<default key="_controller">FutureStoreSiteBundle:Profile:index</default>
+	</route>
 </routes>

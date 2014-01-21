@@ -24,11 +24,11 @@ security:
             pattern:      ^/
             anonymous:    ~
             form_login:
-                default_target_path: /
+                default_target_path: /profile/index
                 username_parameter: login_form[username]
                 password_parameter: login_form[password]
                 provider:   fos_userbundle
-                login_path: /login
+                login_path: /profile/login
                 check_path: /profile/login_check
             logout:
                 path:       /profile/logout
