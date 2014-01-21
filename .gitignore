@@ -1,0 +1,14 @@
+.project
+.buildpath
+.settings
+.idea
+.htaccess
+/app/config/parameters.yml
+/app/cache/*
+/app/logs/*
+/web/bundles/*
+/vendor/*
+web/bundles/sensiodistribution/
+/web/uploads/*
+composer.lock
+*.log
