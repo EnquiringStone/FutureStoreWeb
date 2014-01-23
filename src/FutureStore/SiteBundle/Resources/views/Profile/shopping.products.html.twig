@@ -1,0 +1,31 @@
+{% extends 'FutureStoreSiteBundle::layout.html.twig' %}
+{% block title %}Producten{% endblock %}
+{% block content %}
+	<p>De boodschappenlijst {{ list_name }} bevat de volgende producten</p>
+	{% if products|length > 0 %}
+		<table id="list-products">
+			<thead>
+				<tr>
+					<th>Naam</th>
+					<th>Prijs</th>
+					<th>Hoeveelheid</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for key,product in products %}
+					<tr data-product-id="{{ product.id }}">
+						<td>{{ product.name }}</td>
+						<td>{{ product.price }}</td>
+						<td><input class="product-quantity" type="text" value="{{ key }}"></td>
+						<td><button class="remove-product">Verwijder</button></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<input type="hidden" class="list-id" value="{{ list_id }}">
+		</table>
+		<p>Klik <a href="{{ path('FutureStoreSiteBundle_add_products', {'list_id': list_id}) }}">hier</a> om producten toe te voegen</p>
+	{% else %}
+		<p>Er zijn geen producten opgenomen in de boodschappenlijst. Klik <a href="{{ path('FutureStoreSiteBundle_add_products', {'list_id': list_id}) }}">hier</a> om producten toe te voegen</p>
+	{% endif %}
+{% endblock %}

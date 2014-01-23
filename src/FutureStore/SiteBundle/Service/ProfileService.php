@@ -40,6 +40,20 @@ class ProfileService implements AjaxInterface {
 		$merge ? $this->mergeShoppingListProduct($data) : $this->createShoppingListProduct($data);
 	}
 
+	public function removeProductFromList($data) {
+		$listProduct = $this->manager->getRepository('FutureStoreSiteBundle:ShoppingListProduct')->findOneBy(array('shopping_list_id' => $data['listId'], 'product_id' => $data['productId']));
+		if($this->context->getToken()->getUser()->getId() != $listProduct->getShoppingList()->getUser()->getId()) throw new \Exception('Access denied');
+		$this->manager->remove($listProduct);
+		$this->manager->flush();
+	}
+
+	public function changeQuantityInList($data) {
+		$listProduct = $this->manager->getRepository('FutureStoreSiteBundle:ShoppingListProduct')->findOneBy(array('shopping_list_id' => $data['listId'], 'product_id' => $data['productId']));
+		if($this->context->getToken()->getUser()->getId() != $listProduct->getShoppingList()->getUser()->getId()) throw new \Exception('Access denied');
+		$listProduct->setAmount($data['quantity']);
+		$this->manager->flush();
+	}
+
 	public function getName() {
 		return 'Profile';
 	}

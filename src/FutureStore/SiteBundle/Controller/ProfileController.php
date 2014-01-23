@@ -60,4 +60,17 @@ class ProfileController extends Controller {
 			'lists' => $lists
 		));
 	}
+
+	public function showListProductsAction($list_id) {
+		$listItems = $this->getDoctrine()->getRepository('FutureStoreSiteBundle:ShoppingListProduct')->findBy(array('shopping_list_id' => $list_id));
+		$products = array();
+		foreach($listItems as $item) {
+			if($item->getShoppingList()->getUser()->getId() != $this->getUser()->getId()) throw new \Exception('Access denied');
+			$products[$item->getAmount()] = $item->getProduct();
+		}
+
+		return $this->render('FutureStoreSiteBundle:Profile:shopping.products.html.twig', array(
+			'products' => $products, 'list_name' => $this->getDoctrine()->getRepository('FutureStoreSiteBundle:ShoppingList')->find($list_id)->getListName(), 'list_id' => $list_id
+		));
+	}
 }

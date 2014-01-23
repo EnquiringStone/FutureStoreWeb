@@ -29,4 +29,7 @@
 	<route id="FutureStoreSiteBundle_profile_shopping_show" pattern="/profile/shopping/show">
 		<default key="_controller">FutureStoreSiteBundle:Profile:showLists</default>
 	</route>
+	<route id="FutureStoreSiteBundle_profile_shopping_products" pattern="/profile/shopping/products/{list_id}">
+		<default key="_controller">FutureStoreSiteBundle:Profile:showListProducts</default>
+	</route>
 </routes>
