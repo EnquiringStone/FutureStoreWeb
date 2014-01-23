@@ -1,5 +1,6 @@
 {% extends 'FutureStoreSiteBundle::layout.html.twig' %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-	<p>Profile</p>
+	<p>Welkom bij uw profiel. U kunt <a href="{{ path('FutureStoreSiteBundle_profile_shopping_create') }}">hier</a> uw boodschappenlijst aanmaken. Heeft u al
+		een boodschappenlijst aangemaakt ? Klik <a href="{{ path('FutureStoreSiteBundle_profile_shopping_show') }}">hier</a> om ze te bekijken.</p>
 {% endblock %}

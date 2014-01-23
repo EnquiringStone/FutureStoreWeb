@@ -20,4 +20,13 @@
 	<route id="FutureStoreSiteBundle_profile_index" pattern="/profile/index">
 		<default key="_controller">FutureStoreSiteBundle:Profile:index</default>
 	</route>
+	<route id="FutureStoreSiteBundle_profile_shopping_create" pattern="/profile/shopping/create">
+		<default key="_controller">FutureStoreSiteBundle:Profile:createShoppingList</default>
+	</route>
+	<route id="FutureStoreSiteBundle_add_products" pattern="/profile/products/add">
+		<default key="_controller">FutureStoreSiteBundle:Profile:addProducts</default>
+	</route>
+	<route id="FutureStoreSiteBundle_profile_shopping_show" pattern="/profile/shopping/show">
+		<default key="_controller">FutureStoreSiteBundle:Profile:showLists</default>
+	</route>
 </routes>

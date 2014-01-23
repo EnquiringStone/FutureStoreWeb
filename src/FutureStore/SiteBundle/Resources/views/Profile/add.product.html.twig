@@ -1,0 +1,26 @@
+{% extends 'FutureStoreSiteBundle::layout.html.twig' %}
+{% block title %}Voeg product toe{% endblock %}
+{% block content %}
+	<p>De producten worden op de boodschappenlijst {{ list_name }} gezet/toegevoegt.</p>
+	<table id="add-products">
+		<thead>
+			<tr>
+				<th>Naam</th>
+				<th>Prijs</th>
+				<th>Hoeveelheid</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products %}
+				<tr data-product-id="{{ product.id }}">
+					<td>{{ product.name }}</td>
+					<td>{{ product.price }}</td>
+					<td><input class="product-quantity" type="text"></td>
+					<td><button class="add-product-to-list" type="submit">Voeg toe</button></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<input type="hidden" class="list-id" value="{{ list_id }}">
+	</table>
+{% endblock %}

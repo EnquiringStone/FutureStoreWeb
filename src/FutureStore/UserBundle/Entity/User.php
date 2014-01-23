@@ -23,7 +23,55 @@ class User extends BaseUser {
 	 */
 	protected $id;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="FutureStore\SiteBundle\Entity\ShoppingList", mappedBy="user")
+	 */
+	protected $shopping_lists;
+
 	public function __construct() {
 		parent::__construct();
 	}
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add shopping_lists
+     *
+     * @param \FutureStore\SiteBundle\Entity\ShoppingList $shoppingLists
+     * @return User
+     */
+    public function addShoppingList(\FutureStore\SiteBundle\Entity\ShoppingList $shoppingLists)
+    {
+        $this->shopping_lists[] = $shoppingLists;
+
+        return $this;
+    }
+
+    /**
+     * Remove shopping_lists
+     *
+     * @param \FutureStore\SiteBundle\Entity\ShoppingList $shoppingLists
+     */
+    public function removeShoppingList(\FutureStore\SiteBundle\Entity\ShoppingList $shoppingLists)
+    {
+        $this->shopping_lists->removeElement($shoppingLists);
+    }
+
+    /**
+     * Get shopping_lists
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShoppingLists()
+    {
+        return $this->shopping_lists;
+    }
 }

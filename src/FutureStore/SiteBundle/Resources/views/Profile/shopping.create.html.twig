@@ -1,0 +1,12 @@
+{% extends 'FutureStoreSiteBundle::layout.html.twig' %}
+{% block title %}Boodschappenlijst aanmaken{% endblock %}
+{% block content %}
+	<p>Vul de onderstaande formulier in</p>
+
+	<form class="form-horizontal" action="{{ path('FutureStoreSiteBundle_add_products') }}" method="POST">
+		<fieldset>
+			{{ form_widget(create_shopping_list_form, {'form_type': 'horizontal'}) }}
+			<button type="submit" class="btn">Voeg producten toe</button>
+		</fieldset>
+	</form>
+{% endblock %}

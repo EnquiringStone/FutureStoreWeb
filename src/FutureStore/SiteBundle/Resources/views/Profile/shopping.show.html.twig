@@ -1,0 +1,26 @@
+{% extends 'FutureStoreSiteBundle::layout.html.twig' %}
+{% block title %}Boodschappenlijsten{% endblock %}
+{% block content %}
+	{% if lists is null %}
+		<p>U heeft nog geen lijsten aangemaakt. Klik <a href="{{ path('FutureStoreSiteBundle_profile_shopping_create') }}">hier</a> om 1 aan te maken.</p>
+	{% else %}
+		<table>
+			<thead>
+				<tr>
+					<th>Naam</th>
+					<th>Productaantal</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for list in lists %}
+					<tr>
+						<td>{{ list.getListName }}</td>
+						<td>{{ list.getShoppingListProducts|length }}</td>
+						<td><a href="{{ path('FutureStoreSiteBundle_add_products', {'list_id': list.id}) }}">Voeg producten toe</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endblock %}
