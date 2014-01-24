@@ -1,0 +1,2 @@
+future_store_api:
+    listen_to_route: "/api"

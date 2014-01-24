@@ -16,7 +16,8 @@ class FutureStoreApiExtension extends Extension {
 
 	public function load(array $configs, ContainerBuilder $container) {
 		$loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-//		$config = $this->processConfiguration(new Configuration(), $configs);
+		$config = $this->processConfiguration(new Configuration(), $configs);
+		$container->setParameter('api.route', $config['listen_to_route']);
 		$loader->load('services.xml');
 	}
 

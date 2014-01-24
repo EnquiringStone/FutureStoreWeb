@@ -24,6 +24,11 @@ class User extends BaseUser {
 	protected $id;
 
 	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $login_token;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="FutureStore\SiteBundle\Entity\ShoppingList", mappedBy="user")
 	 */
 	protected $shopping_lists;
@@ -73,5 +78,28 @@ class User extends BaseUser {
     public function getShoppingLists()
     {
         return $this->shopping_lists;
+    }
+
+    /**
+     * Set login_token
+     *
+     * @param string $loginToken
+     * @return User
+     */
+    public function setLoginToken($loginToken)
+    {
+        $this->login_token = $loginToken;
+
+        return $this;
+    }
+
+    /**
+     * Get login_token
+     *
+     * @return string 
+     */
+    public function getLoginToken()
+    {
+        return $this->login_token;
     }
 }

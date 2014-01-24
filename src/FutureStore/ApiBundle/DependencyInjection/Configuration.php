@@ -19,7 +19,11 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function getConfigTreeBuilder() {
 		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('notarishof_default_bundle');
+		$rootNode = $treeBuilder->root('future_store_api');
+		$rootNode
+			->children()
+				->variableNode('listen_to_route')->isRequired()->end()
+			->end();
 		return $treeBuilder;
     }
 
