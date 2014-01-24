@@ -1,3 +1,6 @@
 index:
     prefix: /
     resource: "@FutureStoreSiteBundle/Resources/config/routing.xml"
+api:
+    prefix: /api
+    resource: "@FutureStoreApiBundle/Resources/config/routing.xml"

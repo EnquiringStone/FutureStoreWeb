@@ -5,6 +5,7 @@
 	<parameters>
 		<parameter key="future.store.user.service.class">FutureStore\ApiBundle\Service\UserService</parameter>
 		<parameter key="future.store.api.listener.class">FutureStore\ApiBundle\EventListener\ApiListener</parameter>
+		<parameter key="future.store.exception.listener.class">FutureStore\ApiBundle\EventListener\ApiExceptionListener</parameter>
 	</parameters>
 	<services>
 		<service id="future.store.user.service" class="%future.store.user.service.class%">
@@ -17,6 +18,10 @@
 			<argument type="service" id="doctrine.orm.entity_manager" />
 			<argument>%api.route%</argument>
 			<argument type="service" id="future.store.user.service" />
+		</service>
+		<service id="future.store.exception.listener" class="%future.store.exception.listener.class%">
+			<tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+			<argument>%api.route%</argument>
 		</service>
 	</services>
 </container>
