@@ -15,6 +15,9 @@
 	</route>
 	<route id="FutureStoreSiteBundle_profile_login_check" pattern="/profile/login_check" />
 	<route id="FutureStoreSiteBundle_profile_logout" pattern="/profile/logout" />
+	<route id="FutureStoreSiteBundle_profile_register" pattern="/register">
+		<default key="_controller">FutureStoreSiteBundle:Security:register</default>
+	</route>
 
 	<!-- Profile -->
 	<route id="FutureStoreSiteBundle_profile_index" pattern="/profile/index">

@@ -1,3 +1,8 @@
 <div id="header">
-	<p>De header</p>
+	<a href="{% if app.user %}{{ path('FutureStoreSiteBundle_profile_index') }}{% else %}{{ path('FutureStoreSiteBundle_index') }}{% endif %}">Home</a> |
+	{% if app.user %}<a href="{{ path('FutureStoreSiteBundle_profile_logout') }}">Uitloggen</a> |
+		<a href="{{ path('FutureStoreSiteBundle_profile_shopping_show') }}">Boodschappenlijsten</a> |
+		<a href="{{ path('FutureStoreSiteBundle_profile_shopping_create') }}">Maak boodschappenlijst aan</a>
+	{% else %}<a href="{{ path('FutureStoreSiteBundle_profile_login') }}">Login/Regristreren</a>
+	{% endif %}
 </div>
