@@ -58,11 +58,12 @@ class UserService implements ApiInterface{
 			$lists = array();
 			foreach($user->getShoppingLists() as $shoppingList) {
 				foreach($shoppingList->getShoppingListProducts() as $product) {
-					$lists[] = array(
+					$lists[$shoppingList->getId()][] = array(
 						'list_name' => $shoppingList->getListName(),
 						'product_name' => $product->getProduct()->getName(),
 						'product_price'	=> $product->getProduct()->getPrice(),
-						'quantity' => $product->getAmount()
+						'quantity' => $product->getAmount(),
+						'product_id' => $product->getProduct()->getId()
 					);
 				}
 			}
