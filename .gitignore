@@ -2,7 +2,6 @@
 .buildpath
 .settings
 .idea
-.htaccess
 /app/config/parameters.yml
 /app/cache/*
 /app/logs/*
