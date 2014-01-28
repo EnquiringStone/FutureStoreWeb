@@ -10,6 +10,8 @@ namespace FutureStore\ApiBundle\Service;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Doctrine\UserManager;
 use FutureStore\ApiBundle\Interfaces\ApiInterface;
+use FutureStore\SiteBundle\Entity\Product;
+use FutureStore\SiteBundle\Entity\ShoppingListProduct;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -58,11 +60,12 @@ class UserService implements ApiInterface{
 			$lists = array();
 			foreach($user->getShoppingLists() as $shoppingList) {
 				foreach($shoppingList->getShoppingListProducts() as $product) {
-					$lists[] = array(
+					$lists[$shoppingList->getId()][] = array(
 						'list_name' => $shoppingList->getListName(),
 						'product_name' => $product->getProduct()->getName(),
 						'product_price'	=> $product->getProduct()->getPrice(),
-						'quantity' => $product->getAmount()
+						'quantity' => $product->getAmount(),
+						'product_id' => $product->getProduct()->getId()
 					);
 				}
 			}
@@ -70,6 +73,46 @@ class UserService implements ApiInterface{
 			return array('shopping_lists' => $lists);
 		}
 		throw new \Exception('Access denied');
+	}
+
+	public function addProduct($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('login_token' => $data['login_token']))) {
+			$product = new Product();
+			$product->setBarcode($data['barcode']);
+			$product->setName($data['product_name']);
+			$product->setPrice(doubleval($data['product_price']));
+			$this->manager->persist($product);
+			$this->manager->flush();
+			return;
+		}
+	}
+
+	public function addProductToList($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('login_token' => $data['login_token']))) {
+			$product = $this->manager->getRepository('FutureStoreSiteBundle:Product')->findOneBy(array('barcode' => $data['barcode']));
+			if(empty($product)) throw new \Exception('Het product bestaat niet');
+			$list = $this->manager->getRepository('FutureStoreSiteBundle"ShoppingList')->find($data['list_id']);
+			if(empty($list)) throw new \Exception('De lijst bestaat niet');
+			if($list->getUser()->getId() != $user->getId()) throw new \Exception('Access denied');
+			$listProduct = new ShoppingListProduct();
+			$listProduct->setProduct($product);
+			$listProduct->setShoppingList($list);
+			$listProduct->setAmount(1);
+			$this->manager->persist($listProduct);
+			$this->manager->flush();
+			return;
+		}
+	}
+
+	public function addAmount($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('login_token' => $data['login_token']))) {
+			$listProduct = $this->manager->getRepository('FutureStoreSiteBundle:ShoppingListProduct')->findOneBy(array('shopping_list_id' => $data['list_id'], 'product_id' => $data['product_id']));
+			if(empty($listProduct)) throw new \Exception('Het product is niet gevonden in de lijst');
+			if($listProduct->getShoppingList()->getUser()->getId() != $user->getId()) throw new \Exception('Access denied');
+			$listProduct->setAmount($listProduct->getAmount() + intval($data['amount']));
+			$this->manager->flush();
+			return array('current_amount' => $listProduct->getAmount());
+		}
 	}
 
 	public function getName() {
