@@ -25,3 +25,38 @@
     position:absolute;
     bottom:10px;
 }
+
+.login-fieldset,.register-fieldset,.create-list-fieldset{
+    width:500px;
+    margin-top:10px;
+}
+
+
+.login-fieldset label{
+    display:inline-block;
+    width:120px;
+}
+
+
+.register-fieldset{
+    width:500px;
+    margin-top:10px;
+}
+
+.register-fieldset label{
+    display:inline-block;
+    width:150px;
+}
+
+.create-list-fieldset label{
+    display:inline-block;
+    width:60px;
+}
+
+.create-list-fieldset .btn{
+    margin-top:10px;
+}
+
+#add-products .product-quantity,#list-products .product-quantity{
+    width:90px;
+}
