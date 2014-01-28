@@ -7,13 +7,16 @@
 		{#<link rel="stylesheet/less" type="text/css" href="{{ asset('bundles/notarishofdefault/less/styles.less') }}" />#}
 		<script src="{{ asset('bundles/futurestoresite/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('bundles/futurestoresite/js/profile.js') }}" type="text/javascript"></script>
+        <link rel="stylesheet" href="{{ asset('bundles/futurestoresite/css/style.css') }}">
 		{% block earlyScripts %}{% endblock %}
 		{% block style %}{% endblock %}
 	</head>
 	<body>
 		<div id="main-container" class="container">
 			{% include 'FutureStoreSiteBundle:Base:header.html.twig' %}
-			{% block content %}{% endblock content %}
+            <div class="content">
+			    {% block content %}{% endblock content %}
+            </div>
 			{% include 'FutureStoreSiteBundle:Base:footer.html.twig' %}
 		</div>
 	</body>

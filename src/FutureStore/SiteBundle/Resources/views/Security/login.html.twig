@@ -2,7 +2,7 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 	<form class="form-horizontal" action="{{ path('FutureStoreSiteBundle_profile_login_check') }}" method="POST">
-		<fieldset>
+		<fieldset class="login-fieldset">
 			{% if error %}<div class="alert alert-error">{{ error.message }}</div>{% endif %}
 			{{ form_widget(login_form, {'form_type': 'horizontal'}) }}
 			<div class="control-group">

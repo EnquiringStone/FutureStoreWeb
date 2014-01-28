@@ -2,11 +2,11 @@
 {% block title %}Regristreer{% endblock %}
 {% block content %}
 	<form class="form-horizontal" action="{{ path('FutureStoreSiteBundle_profile_register') }}" method="POST">
-		<fieldset>
+        <fieldset class="register-fieldset">
 			{{ form_widget(register_form, {'form_type': 'horizontal'}) }}
 			<div class="control-group">
 				<div class="controls">
-					<button type="submit" class="btn">Regristreer</button>
+					<button type="submit" class="btn">Registreer</button>
 				</div>
 			</div>
 		</fieldset>
