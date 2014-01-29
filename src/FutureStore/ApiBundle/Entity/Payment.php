@@ -43,6 +43,11 @@ class Payment {
 	 */
 	private $user;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="FutureStore\ApiBundle\Entity\PaymentArticle", mappedBy="payment")
+	 */
+	private $payment_articles;
+
     /**
      * Get id
      *
@@ -143,5 +148,45 @@ class Payment {
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->payment_articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add payment_articles
+     *
+     * @param \FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles
+     * @return Payment
+     */
+    public function addPaymentArticle(\FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles)
+    {
+        $this->payment_articles[] = $paymentArticles;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment_articles
+     *
+     * @param \FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles
+     */
+    public function removePaymentArticle(\FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles)
+    {
+        $this->payment_articles->removeElement($paymentArticles);
+    }
+
+    /**
+     * Get payment_articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPaymentArticles()
+    {
+        return $this->payment_articles;
     }
 }

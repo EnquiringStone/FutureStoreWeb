@@ -10,6 +10,7 @@ namespace FutureStore\ApiBundle\Service;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Doctrine\UserManager;
 use FutureStore\ApiBundle\Entity\Payment;
+use FutureStore\ApiBundle\Entity\PaymentArticle;
 use FutureStore\ApiBundle\Interfaces\ApiInterface;
 use FutureStore\SiteBundle\Entity\Product;
 use FutureStore\SiteBundle\Entity\ShoppingListProduct;
@@ -131,6 +132,17 @@ class UserService implements ApiInterface{
 			$payment->setHasPayed(false);
 			$payment->setUser($user);
 			$this->manager->persist($payment);
+
+			foreach(explode(',',$data['inventory']) as $item) {
+				$articleData = explode('=', $item);
+
+				$article = new PaymentArticle();
+				$product = $this->manager->getRepository('FutureStoreSiteBundle:Product')->findOneBy(array('barcode' => $articleData[0]));
+				$article->setProduct($product);
+				$article->setPayment($payment);
+				$article->setQuantity(intval($articleData[1]));
+				$this->manager->persist($article);
+			}
 			$this->manager->flush();
 			return;
 		}

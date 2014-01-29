@@ -43,6 +43,11 @@ class User extends BaseUser {
 	 */
 	protected $payments;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="FutureStore\ApiBundle\Entity\PaymentArticle", mappedBy="user")
+	 */
+	protected $payment_articles;
+
 	public function __construct() {
 		parent::__construct();
 	}
@@ -167,5 +172,38 @@ class User extends BaseUser {
     public function getNfcToken()
     {
         return $this->nfc_token;
+    }
+
+    /**
+     * Add payment_articles
+     *
+     * @param \FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles
+     * @return User
+     */
+    public function addPaymentArticle(\FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles)
+    {
+        $this->payment_articles[] = $paymentArticles;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment_articles
+     *
+     * @param \FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles
+     */
+    public function removePaymentArticle(\FutureStore\ApiBundle\Entity\PaymentArticle $paymentArticles)
+    {
+        $this->payment_articles->removeElement($paymentArticles);
+    }
+
+    /**
+     * Get payment_articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPaymentArticles()
+    {
+        return $this->payment_articles;
     }
 }
