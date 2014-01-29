@@ -29,9 +29,19 @@ class User extends BaseUser {
 	protected $login_token;
 
 	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $nfc_token;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="FutureStore\SiteBundle\Entity\ShoppingList", mappedBy="user")
 	 */
 	protected $shopping_lists;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="FutureStore\ApiBundle\Entity\Payment", mappedBy="user")
+	 */
+	protected $payments;
 
 	public function __construct() {
 		parent::__construct();
@@ -101,5 +111,61 @@ class User extends BaseUser {
     public function getLoginToken()
     {
         return $this->login_token;
+    }
+
+    /**
+     * Add payments
+     *
+     * @param \FutureStore\ApiBundle\Entity\Payment $payments
+     * @return User
+     */
+    public function addPayment(\FutureStore\ApiBundle\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
+
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     *
+     * @param \FutureStore\ApiBundle\Entity\Payment $payments
+     */
+    public function removePayment(\FutureStore\ApiBundle\Entity\Payment $payments)
+    {
+        $this->payments->removeElement($payments);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+
+    /**
+     * Set nfc_token
+     *
+     * @param string $nfcToken
+     * @return User
+     */
+    public function setNfcToken($nfcToken)
+    {
+        $this->nfc_token = $nfcToken;
+
+        return $this;
+    }
+
+    /**
+     * Get nfc_token
+     *
+     * @return string 
+     */
+    public function getNfcToken()
+    {
+        return $this->nfc_token;
     }
 }
