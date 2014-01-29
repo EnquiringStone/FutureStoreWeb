@@ -9,11 +9,11 @@ namespace FutureStore\ApiBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Doctrine\UserManager;
+use FutureStore\ApiBundle\Entity\Payment;
 use FutureStore\ApiBundle\Interfaces\ApiInterface;
 use FutureStore\SiteBundle\Entity\Product;
 use FutureStore\SiteBundle\Entity\ShoppingListProduct;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\SecurityContext;
 
 class UserService implements ApiInterface{
 
@@ -115,7 +115,26 @@ class UserService implements ApiInterface{
 		}
 	}
 
+	public function bindNFCToUser($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('username' => $data['username']))) {
+			$user->setNfcToken($data['nfc_id']);
+			$this->manager->flush();
+			return;
+		}
+		throw new \Exception('Gebruiker bestaat niet');
+	}
 
+	public function payTheBills($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('login_token' => $data['login_token']))) {
+			$payment = new Payment();
+			$payment->setCreateDate(new \DateTime());
+			$payment->setHasPayed(false);
+			$payment->setUser($user);
+			$this->manager->persist($payment);
+			$this->manager->flush();
+			return;
+		}
+	}
 
 	public function getName() {
 		return 'user';

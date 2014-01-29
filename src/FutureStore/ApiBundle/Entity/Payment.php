@@ -35,14 +35,13 @@ class Payment {
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
-	protected $create_data;
+	protected $create_date;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="FutureStore\UserBundle\Entity\User", inversedBy="payments")
 	 * @ORM\JoinColumn(referencedColumnName="id", name="user_id")
 	 */
 	private $user;
-
 
     /**
      * Get id
@@ -101,26 +100,26 @@ class Payment {
     }
 
     /**
-     * Set create_data
+     * Set create_date
      *
-     * @param \DateTime $createData
+     * @param \DateTime $createDate
      * @return Payment
      */
-    public function setCreateData($createData)
+    public function setCreateDate($createDate)
     {
-        $this->create_data = $createData;
+        $this->create_date = $createDate;
 
         return $this;
     }
 
     /**
-     * Get create_data
+     * Get create_date
      *
      * @return \DateTime 
      */
-    public function getCreateData()
+    public function getCreateDate()
     {
-        return $this->create_data;
+        return $this->create_date;
     }
 
     /**
