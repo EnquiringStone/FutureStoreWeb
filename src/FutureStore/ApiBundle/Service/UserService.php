@@ -135,7 +135,6 @@ class UserService implements ApiInterface{
 
 			foreach(explode(',',$data['inventory']) as $item) {
 				$articleData = explode('=', $item);
-
 				$article = new PaymentArticle();
 				$product = $this->manager->getRepository('FutureStoreSiteBundle:Product')->findOneBy(array('barcode' => $articleData[0]));
 				$article->setProduct($product);
@@ -143,6 +142,34 @@ class UserService implements ApiInterface{
 				$article->setQuantity(intval($articleData[1]));
 				$this->manager->persist($article);
 			}
+			$this->manager->flush();
+			return;
+		}
+	}
+
+	public function getPayment($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('nfc_token' => $data['nfc_id']))) {
+			$payments = $this->manager->getRepository('FutureStoreApiBundle:Payment')->findBy(array('user_id' => $user->getId(), 'has_payed' => 0));
+			$lastPayment = null;
+			foreach($payments as $payment) {
+				if($lastPayment == null || $lastPayment->getCreateDate() < $payment->getCreateDate()) {
+					$lastPayment = $payment;
+				}
+			}
+			if($lastPayment == null) throw new \Exception('Geen betaling gevonden');
+			$price = 0;
+			foreach($lastPayment->getPaymentArticles() as $article) {
+				$price += ($article->getProduct()->getPrice() * $article->getQuantity());
+			}
+			return array('price' => $price, 'payment_id' => $lastPayment->getId());
+		}
+	}
+
+	public function finishPayment($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('nfc_token' => $data['nfc_id']))) {
+			$payment = $this->manager->getRepository('FutureStoreApiBundle:Payment')->find($data['payment_id']);
+			if(empty($payment)) throw new \Exception('Betaling niet gevonden');
+			$payment->setHasPayed(true);
 			$this->manager->flush();
 			return;
 		}
