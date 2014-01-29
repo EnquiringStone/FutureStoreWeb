@@ -13,11 +13,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for key,product in products %}
-					<tr data-product-id="{{ product.id }}">
-						<td>{{ product.name }}</td>
-						<td>{{ product.price }}</td>
-						<td><input class="product-quantity" type="text" value="{{ key }}"></td>
+				{% for product in products %}
+					<tr data-product-id="{{ product[0].id }}">
+						<td>{{ product[0].name }}</td>
+						<td>{{ product[0].price }}</td>
+						<td><input class="product-quantity" type="text" value="{{ product[1] }}"></td>
 						<td><button class="remove-product">Verwijder</button></td>
 					</tr>
 				{% endfor %}

@@ -66,7 +66,7 @@ class ProfileController extends Controller {
 		$products = array();
 		foreach($listItems as $item) {
 			if($item->getShoppingList()->getUser()->getId() != $this->getUser()->getId()) throw new \Exception('Access denied');
-			$products[$item->getAmount()] = $item->getProduct();
+			$products[] = array($item->getProduct(), $item->getAmount());
 		}
 
 		return $this->render('FutureStoreSiteBundle:Profile:shopping.products.html.twig', array(
