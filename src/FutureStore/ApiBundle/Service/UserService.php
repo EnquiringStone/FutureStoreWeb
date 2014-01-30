@@ -175,6 +175,18 @@ class UserService implements ApiInterface{
 		}
 	}
 
+	public function checkPayment($data) {
+		if($user = $this->manager->getRepository('FutureStoreUserBundle:User')->findOneBy(array('nfc_token' => $data['nfc_id']))) {
+			$payment = $this->manager->getRepository('FutureStoreApiBundle:Payment')->find($data['payment_id']);
+			if(empty($payment)) throw new \Exception('Betaling niet gevonden');
+			$lines = array();
+			foreach($payment->getPaymentArticles() as $article) {
+				$lines[] = array('name' => $article->getProduct()->getName(), 'quantity' => $article->getQuantity());
+			}
+			return array('products' => $lines);
+		}
+	}
+
 	public function getName() {
 		return 'user';
 	}
