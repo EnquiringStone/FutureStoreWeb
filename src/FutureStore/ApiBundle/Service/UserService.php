@@ -163,6 +163,7 @@ class UserService implements ApiInterface{
 			}
 			return array('price' => $price, 'payment_id' => $lastPayment->getId());
 		}
+		throw new \Exception('Geen gebruikers zijn gekoppeld aan de kaart');
 	}
 
 	public function finishPayment($data) {
@@ -173,6 +174,7 @@ class UserService implements ApiInterface{
 			$this->manager->flush();
 			return;
 		}
+		throw new \Exception('Geen gebruikers zijn gekoppeld aan de kaart');
 	}
 
 	public function checkPayment($data) {
@@ -185,6 +187,7 @@ class UserService implements ApiInterface{
 			}
 			return array('products' => $lines);
 		}
+		throw new \Exception('Geen gebruikers zijn gekoppeld aan de kaart');
 	}
 
 	public function getName() {
